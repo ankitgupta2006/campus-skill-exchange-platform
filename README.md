@@ -17,15 +17,15 @@ A full-stack student skill-sharing platform built with HTML, CSS, JavaScript, No
 
 ## Local setup
 1. Install Node.js and MongoDB Community Server.
-2. Copy .env.example to .env.
-3. Set MONGO_URI to mongodb://127.0.0.1:27017/campus_skill_exchange.
-4. Set a private JWT_SECRET.
-5. Run npm install.
-6. Start MongoDB with net start MongoDB.
-7. Run npm start.
-8. Open http://localhost:5000.
+2. Copy `.env.example` to `.env`.
+3. Configure `MONGO_URI` with your local MongoDB database.
+4. Configure `JWT_SECRET` with your own private secret.
+5. Run `npm install`.
+6. Start MongoDB.
+7. Run `npm start`.
+8. Open `http://localhost:5000`.
 
-Never commit .env or real secrets to GitHub.
+**Security:** Never commit `.env`, database credentials, JWT secrets, passwords, API keys, or other private configuration to GitHub. Use `.env.example` only as a template.
 
 ## API
 POST /api/auth/register

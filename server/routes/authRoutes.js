@@ -1,0 +1,1 @@
+const express=require("express");const {register,login,me,updateProfile}=require("../controllers/userController");const auth=require("../middleware/authMiddleware");const r=express.Router();r.post("/register",register);r.post("/login",login);r.get("/me",auth,me);r.put("/profile",auth,updateProfile);module.exports=r;

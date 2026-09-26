@@ -1,0 +1,1 @@
+const express=require("express");const {listRequests,createRequest,updateRequest}=require("../controllers/requestController");const auth=require("../middleware/authMiddleware");const r=express.Router();r.use(auth);r.get("/",listRequests);r.post("/",createRequest);r.patch("/:id",updateRequest);module.exports=r;

@@ -1,0 +1,1 @@
+const express=require("express");const {getPeers}=require("../controllers/userController");const auth=require("../middleware/authMiddleware");const r=express.Router();r.get("/peers",auth,getPeers);module.exports=r;

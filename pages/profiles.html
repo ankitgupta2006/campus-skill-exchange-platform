@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Student Profiles - Campus Skill Exchange</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/profiles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">↔</span><span>Campus Skill<br />Exchange</span>
+      </div>
+      <nav>
+        <a href="../index.html">Home</a><a href="skills.html">Find Skills</a
+        ><a href="profiles.html">Profiles</a><a href="about.html">About</a
+        ><a href="login.html">Login</a
+        ><a href="register.html" class="nav-button">Register</a>
+      </nav>
+    </header>
+    <section class="page-header reference-profiles-banner">
+      <p class="section-label">CAMPUS COMMUNITY</p>
+      <h1>Students ready<br />to share.</h1>
+      <p>
+        Search the campus community and discover students who have skills you
+        want to learn.
+      </p>
+    </section>
+    <section class="profile-section">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search name, skill or course..."
+        /><button onclick="searchProfiles()" class="button">Search</button>
+      </div>
+      <div id="profileContainer" class="profile-container"></div>
+    </section>
+    <section class="cta-section">
+      <div>
+        <p class="section-label">JOIN THE COMMUNITY</p>
+        <h2>Don't see your skill? Add your own profile.</h2>
+      </div>
+      <a href="register.html" class="button">Create Profile</a>
+    </section>
+    <footer class="footer">
+      <div>
+        <h3>Campus Skill Exchange</h3>
+        <p>Learn. Share. Grow together.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a><a href="skills.html">Skills</a
+        ><a href="about.html">About</a>
+      </div>
+    </footer>
+    <script src="../JS/profiles.js"></script>
+    <script src="../JS/navigation.js"></script>
+  </body>
+</html>

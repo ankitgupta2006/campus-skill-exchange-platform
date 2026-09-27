@@ -6,8 +6,8 @@
     <title>Login - Campus Skill Exchange</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/authentication.css" />
-  </head>
-  <body>
+  <style>.password-field{position:relative}.password-field input{padding-right:65px!important}.password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#087f7d;font-weight:900}.toast-container{position:fixed;right:20px;bottom:20px;z-index:1000;display:grid;gap:10px;max-width:360px}.toast{padding:13px 16px;border-radius:12px;background:#075665;color:#fff;font-weight:800}.toast.error{background:#a83d4a}.toast.success{background:#13765d}.loading{opacity:.7;pointer-events:none}</style></head>
+  <body><div id="toastContainer" class="toast-container" aria-live="polite"></div>
     <header class="header">
       <div class="logo">
         <span class="logo-icon">↔</span><span>Campus Skill<br />Exchange</span>
@@ -33,15 +33,10 @@
             placeholder="Enter your email"
             required
           /><label for="loginPassword">Password</label
-          ><input
-            type="password"
-            id="loginPassword"
-            placeholder="Enter your password"
-            required
-          /><button type="submit" class="button">Sign In</button>
+          ><div class="password-field"><input type="password" id="loginPassword" placeholder="Enter your password" required><button type="button" class="password-toggle" data-target="loginPassword">Show</button></div><button type="submit" class="button" id="loginSubmit">Sign In</button>
         </form>
         <p class="form-link">
-          Don't have an account? <a href="register.html">Create one</a>
+          <a href="forgot-password.html">Forgot password?</a></p><p class="form-link">Don't have an account? <a href="register.html">Create one</a>
         </p>
       </div>
     </section>

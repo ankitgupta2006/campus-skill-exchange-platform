@@ -43,3 +43,9 @@ Repository: https://github.com/ankitgupta2006/campus-skill-exchange-platform
 
 ## Privacy Policy
 A dedicated privacy policy page is available at `pages/privacy-policy.html`. It documents collected account/profile data, password hashing, JWT authentication, MongoDB storage, WhatsApp contact visibility after accepted exchanges, third-party WhatsApp communication, and basic security responsibilities.
+
+## Guides
+- Full run and deployment guide: docs/RUN_GUIDE.md
+- Testing checklist: docs/TESTING.md
+- Security review: docs/SECURITY_REVIEW.md
+- Documentation screenshot checklist: docs/SCREENSHOTS.md

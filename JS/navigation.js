@@ -1,2 +1,37 @@
-const TOKEN_KEY="campusSkillExchangeToken";document.addEventListener("DOMContentLoaded",()=>{const nav=document.querySelector("header nav");if(!nav)return;const current=location.pathname.split("/").pop()||"index.html";nav.querySelectorAll("a").forEach(a=>{if(a.getAttribute("href")?.split("/").pop()===current)a.classList.add("active-link");});if(localStorage.getItem(TOKEN_KEY)){const login=nav.querySelector('a[href$="login.html"]'),reg=nav.querySelector('a[href$="register.html"]');if(login)login.hidden=true;if(reg)reg.hidden=true;if(!nav.querySelector('a[href$="dashboard.html"]')){const a=document.createElement("a");a.href=location.pathname.includes("/pages/")?"dashboard.html":"pages/dashboard.html";a.textContent="Dashboard";nav.prepend(a);}
-if(!nav.querySelector('a[href$="index.html"]')){const a=document.createElement("a");a.href=location.pathname.includes("/pages/")?"../index.html":"index.html";a.textContent="Home";nav.prepend(a);}const b=document.createElement("button");b.className="nav-button";b.textContent="Log out";b.type="button";b.onclick=()=>{localStorage.removeItem(TOKEN_KEY);localStorage.removeItem("campusSkillExchangeUser");location.href=location.pathname.includes("/pages/")?"login.html":"pages/login.html";};nav.appendChild(b);}});
+const TOKEN_KEY = "campusSkillExchangeToken";
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.querySelector("header nav");
+  if (!nav) return;
+  const current = location.pathname.split("/").pop() || "index.html";
+  nav.querySelectorAll("a").forEach((a) => {
+    if (a.getAttribute("href")?.split("/").pop() === current) a.classList.add("active-link");
+  });
+  if (localStorage.getItem(TOKEN_KEY)) {
+    const login = nav.querySelector('a[href$="login.html"]'),
+      reg = nav.querySelector('a[href$="register.html"]');
+    if (login) login.hidden = true;
+    if (reg) reg.hidden = true;
+    if (!nav.querySelector('a[href$="dashboard.html"]')) {
+      const a = document.createElement("a");
+      a.href = location.pathname.includes("/pages/") ? "dashboard.html" : "pages/dashboard.html";
+      a.textContent = "Dashboard";
+      nav.prepend(a);
+    }
+    if (!nav.querySelector('a[href$="index.html"]')) {
+      const a = document.createElement("a");
+      a.href = location.pathname.includes("/pages/") ? "../index.html" : "index.html";
+      a.textContent = "Home";
+      nav.prepend(a);
+    }
+    const b = document.createElement("button");
+    b.className = "nav-button";
+    b.textContent = "Log out";
+    b.type = "button";
+    b.onclick = () => {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem("campusSkillExchangeUser");
+      location.href = location.pathname.includes("/pages/") ? "login.html" : "pages/login.html";
+    };
+    nav.appendChild(b);
+  }
+});

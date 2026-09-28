@@ -38,10 +38,7 @@ function render(list) {
   if (!list.length) {
     const empty = document.createElement("div");
     empty.className = "no-profile";
-    empty.append(
-      makeText("h3", "", "No students found"),
-      makeText("p", "", "Try another search.")
-    );
+    empty.append(makeText("h3", "", "No students found"), makeText("p", "", "Try another search."));
     container.appendChild(empty);
     return;
   }
@@ -53,7 +50,13 @@ function render(list) {
     const top = document.createElement("div");
     top.className = "profile-top";
     top.append(
-      makeText("div", "profile-avatar", String(profile.name || "ST").slice(0, 2).toUpperCase())
+      makeText(
+        "div",
+        "profile-avatar",
+        String(profile.name || "ST")
+          .slice(0, 2)
+          .toUpperCase()
+      )
     );
     const identity = document.createElement("div");
     identity.append(
@@ -102,8 +105,10 @@ async function load() {
   profiles = data.users || [];
   render(profiles);
 
-  const query = new URLSearchParams(window.location.search).get("search") ||
-    new URLSearchParams(window.location.search).get("skill") || "";
+  const query =
+    new URLSearchParams(window.location.search).get("search") ||
+    new URLSearchParams(window.location.search).get("skill") ||
+    "";
   if (query) {
     const input = document.getElementById("searchInput");
     if (input) input.value = query;
@@ -116,7 +121,9 @@ function filter(query = document.getElementById("searchInput")?.value || "") {
   render(
     profiles.filter((profile) =>
       [profile.name, profile.skills, profile.course, profile.college].some((field) =>
-        String(field || "").toLowerCase().includes(value)
+        String(field || "")
+          .toLowerCase()
+          .includes(value)
       )
     )
   );
@@ -144,8 +151,8 @@ document.getElementById("profileContainer")?.addEventListener("click", async (ev
       method: "POST",
       body: JSON.stringify({
         toUserId: button.dataset.id,
-        message: message.trim()
-      })
+        message: message.trim(),
+      }),
     });
     button.textContent = "Request sent";
   } catch (error) {

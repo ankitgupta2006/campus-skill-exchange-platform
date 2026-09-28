@@ -34,7 +34,7 @@ const authLimiter = rateLimit({
   max: 20,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { message: "Too many authentication attempts. Please try again later." }
+  message: { message: "Too many authentication attempts. Please try again later." },
 });
 
 app.use("/api/auth/login", authLimiter);
@@ -52,7 +52,7 @@ app.get("/api/health", (req, res) => {
     database: connected ? "connected" : "unavailable",
     message: connected
       ? "Campus Skill Exchange API is running."
-      : "Campus Skill Exchange API is running, but MongoDB is unavailable."
+      : "Campus Skill Exchange API is running, but MongoDB is unavailable.",
   });
 });
 

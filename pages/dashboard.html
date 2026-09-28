@@ -1,1 +1,260 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Student Dashboard - Campus Skill Exchange</title><link rel="stylesheet" href="../css/style.css"><style>.password-field{position:relative}.password-field input{padding-right:65px!important}.password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#087f7d;font-weight:900}.toast-container{position:fixed;right:20px;bottom:20px;z-index:1000;display:grid;gap:10px;max-width:360px}.toast{padding:13px 16px;border-radius:12px;background:#075665;color:#fff;font-weight:800}.toast.error{background:#a83d4a}.toast.success{background:#13765d}.danger-zone{margin-top:24px;padding-top:20px;border-top:1px solid #f0d5d5}.danger-zone h3{color:#a83d4a;margin:0 0 5px}.danger-zone p{color:#6b878d;margin:0 0 10px}.danger-button{border:1px solid #e3aeb4;background:#fff3f4;color:#a83d4a;border-radius:999px;padding:10px 16px;font-weight:900}.loading{opacity:.7;pointer-events:none}</style><style>.confirm-modal[hidden]{display:none}.confirm-modal{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;background:rgba(7,86,101,.35);padding:20px}.confirm-box{width:min(430px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.2)}.confirm-box h2{margin:0 0 8px;color:#075665}.confirm-box p{color:#6b878d}.confirm-box input{width:100%;padding:12px;border:1px solid #d8ecec;border-radius:10px}.confirm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.confirm-actions button{border:0;border-radius:999px;padding:10px 16px;font-weight:900}.confirm-cancel{background:#eef7f7;color:#075665}.confirm-danger{background:#a83d4a;color:#fff}</style></head><body class="dashboard-page"><div id="toastContainer" class="toast-container" aria-live="polite"></div><header class="header"><a class="logo" href="../index.html"><span class="logo-icon">↔</span><span>Campus Skill<br>Exchange</span></a><nav><a href="../index.html">Home</a><a href="dashboard.html">Dashboard</a><a href="profiles.html">Find Students</a><a href="about.html">About</a><a href="privacy-policy.html">Privacy</a><button id="logoutButton" class="nav-button" type="button">Log out</button></nav></header><main><section class="dashboard-hero"><div><p class="section-label">STUDENT DASHBOARD</p><h1>Welcome back, <span id="studentName">Student</span>.</h1><p>Manage your profile, share your skills, and find your next learning partner.</p></div><div class="dashboard-avatar" id="studentAvatar">ST</div></section><section class="dashboard-content"><div class="dashboard-grid"><article class="dashboard-card stat-card"><span class="stat-label">YOUR SKILLS</span><strong id="skillsCount">0</strong><p>skills ready to share</p></article><article class="dashboard-card stat-card accent-card"><span class="stat-label">PROFILE STATUS</span><strong>Active</strong><p>Your profile is visible to students.</p></article><article class="dashboard-card notifications-card"><div class="notification-heading"><div><span class="stat-label">NOTIFICATIONS</span><strong id="requestCount">0</strong></div></div><p id="notificationSummary">No new exchange requests.</p></article></div><div class="dashboard-columns"><article class="dashboard-card"><div class="card-heading"><div><p class="section-label">YOUR PROFILE</p><h2 id="profileName">Student profile</h2></div><button id="editProfileButton" class="text-button" type="button">Edit profile</button></div><div class="profile-details"><p><strong>Email</strong><span id="profileEmail">Not available</span></p><p><strong>College</strong><span id="profileCollege">Not available</span></p><p><strong>Course</strong><span id="profileCourse">Not available</span></p></div><div class="skills-block"><strong>Skills you can teach</strong><div id="skillsList"></div></div></article><aside class="dashboard-card next-step-card"><p class="section-label">NEXT STEP</p><h2>Find someone to learn from.</h2><p>Explore student profiles and connect with people who have skills you want to develop.</p><a href="profiles.html" class="button">Explore students</a></aside></div><section class="dashboard-card requests-card"><p class="section-label">EXCHANGE REQUESTS</p><h2>Requests from students</h2><div id="requestList" class="request-list"></div></section><section class="dashboard-card requests-card"><p class="section-label">ACCEPTED CONNECTIONS</p><h2>WhatsApp contacts</h2><div id="acceptedConnections" class="request-list"></div></section><section class="dashboard-card edit-card" id="editProfileSection" hidden><div class="card-heading"><h2>Edit your profile</h2><button id="cancelEditButton" class="text-button" type="button">Cancel</button></div><form id="editProfileForm" class="edit-form"><label>Full name</label><input id="editName" required><label>College</label><input id="editCollege" required><label>Course / Department</label><input id="editCourse" required><label>Skills you can teach</label><input id="editSkills" required><label>WhatsApp number</label><input id="editWhatsapp" type="tel" required><label>New Password (optional)</label><div class="password-field"><input id="editPassword" type="password" minlength="6" placeholder="Leave blank to keep current password"><button type="button" class="password-toggle" data-target="editPassword">Show</button></div><button class="button" type="submit">Save changes</button></form><div class="danger-zone"><h3>Delete account</h3><p>This permanently deletes your profile and exchange requests.</p><button id="deleteAccountButton" class="danger-button" type="button">Delete my account</button></div></section></section><div id="deleteModal" class="confirm-modal" hidden><div class="confirm-box" role="dialog" aria-modal="true" aria-labelledby="deleteTitle"><h2 id="deleteTitle">Delete account?</h2><p>This permanently deletes your profile and exchange requests. Enter your current password to continue.</p><input id="deletePassword" type="password" placeholder="Current password"><div class="confirm-actions"><button id="cancelDeleteButton" class="confirm-cancel" type="button">Cancel</button><button id="confirmDeleteButton" class="confirm-danger" type="button">Delete account</button></div></div></div></main><footer class="footer"><h3>Campus Skill Exchange</h3></footer><script src="../JS/dashboard.js"></script><script src="../JS/navigation.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Student Dashboard - Campus Skill Exchange</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .password-field {
+        position: relative;
+      }
+      .password-field input {
+        padding-right: 65px !important;
+      }
+      .password-toggle {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 0;
+        background: transparent;
+        color: #087f7d;
+        font-weight: 900;
+      }
+      .toast-container {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        display: grid;
+        gap: 10px;
+        max-width: 360px;
+      }
+      .toast {
+        padding: 13px 16px;
+        border-radius: 12px;
+        background: #075665;
+        color: #fff;
+        font-weight: 800;
+      }
+      .toast.error {
+        background: #a83d4a;
+      }
+      .toast.success {
+        background: #13765d;
+      }
+      .danger-zone {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #f0d5d5;
+      }
+      .danger-zone h3 {
+        color: #a83d4a;
+        margin: 0 0 5px;
+      }
+      .danger-zone p {
+        color: #6b878d;
+        margin: 0 0 10px;
+      }
+      .danger-button {
+        border: 1px solid #e3aeb4;
+        background: #fff3f4;
+        color: #a83d4a;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-weight: 900;
+      }
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+    </style>
+    <style>
+      .confirm-modal[hidden] {
+        display: none;
+      }
+      .confirm-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1100;
+        display: grid;
+        place-items: center;
+        background: rgba(7, 86, 101, 0.35);
+        padding: 20px;
+      }
+      .confirm-box {
+        width: min(430px, 100%);
+        background: #fff;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      }
+      .confirm-box h2 {
+        margin: 0 0 8px;
+        color: #075665;
+      }
+      .confirm-box p {
+        color: #6b878d;
+      }
+      .confirm-box input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d8ecec;
+        border-radius: 10px;
+      }
+      .confirm-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .confirm-actions button {
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-weight: 900;
+      }
+      .confirm-cancel {
+        background: #eef7f7;
+        color: #075665;
+      }
+      .confirm-danger {
+        background: #a83d4a;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="dashboard-page">
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+    <header class="header">
+      <a class="logo" href="../index.html"
+        ><span class="logo-icon">↔</span><span>Campus Skill<br />Exchange</span></a
+      >
+      <nav>
+        <a href="../index.html">Home</a><a href="dashboard.html">Dashboard</a
+        ><a href="profiles.html">Find Students</a><a href="about.html">About</a
+        ><a href="privacy-policy.html">Privacy</a
+        ><button id="logoutButton" class="nav-button" type="button">Log out</button>
+      </nav>
+    </header>
+    <main>
+      <section class="dashboard-hero">
+        <div>
+          <p class="section-label">STUDENT DASHBOARD</p>
+          <h1>Welcome back, <span id="studentName">Student</span>.</h1>
+          <p>Manage your profile, share your skills, and find your next learning partner.</p>
+        </div>
+        <div class="dashboard-avatar" id="studentAvatar">ST</div>
+      </section>
+      <section class="dashboard-content">
+        <div class="dashboard-grid">
+          <article class="dashboard-card stat-card">
+            <span class="stat-label">YOUR SKILLS</span><strong id="skillsCount">0</strong>
+            <p>skills ready to share</p>
+          </article>
+          <article class="dashboard-card stat-card accent-card">
+            <span class="stat-label">PROFILE STATUS</span><strong>Active</strong>
+            <p>Your profile is visible to students.</p>
+          </article>
+          <article class="dashboard-card notifications-card">
+            <div class="notification-heading">
+              <div>
+                <span class="stat-label">NOTIFICATIONS</span><strong id="requestCount">0</strong>
+              </div>
+            </div>
+            <p id="notificationSummary">No new exchange requests.</p>
+          </article>
+        </div>
+        <div class="dashboard-columns">
+          <article class="dashboard-card">
+            <div class="card-heading">
+              <div>
+                <p class="section-label">YOUR PROFILE</p>
+                <h2 id="profileName">Student profile</h2>
+              </div>
+              <button id="editProfileButton" class="text-button" type="button">Edit profile</button>
+            </div>
+            <div class="profile-details">
+              <p><strong>Email</strong><span id="profileEmail">Not available</span></p>
+              <p><strong>College</strong><span id="profileCollege">Not available</span></p>
+              <p><strong>Course</strong><span id="profileCourse">Not available</span></p>
+            </div>
+            <div class="skills-block">
+              <strong>Skills you can teach</strong>
+              <div id="skillsList"></div>
+            </div>
+          </article>
+          <aside class="dashboard-card next-step-card">
+            <p class="section-label">NEXT STEP</p>
+            <h2>Find someone to learn from.</h2>
+            <p>
+              Explore student profiles and connect with people who have skills you want to develop.
+            </p>
+            <a href="profiles.html" class="button">Explore students</a>
+          </aside>
+        </div>
+        <section class="dashboard-card requests-card">
+          <p class="section-label">EXCHANGE REQUESTS</p>
+          <h2>Requests from students</h2>
+          <div id="requestList" class="request-list"></div>
+        </section>
+        <section class="dashboard-card requests-card">
+          <p class="section-label">ACCEPTED CONNECTIONS</p>
+          <h2>WhatsApp contacts</h2>
+          <div id="acceptedConnections" class="request-list"></div>
+        </section>
+        <section class="dashboard-card edit-card" id="editProfileSection" hidden>
+          <div class="card-heading">
+            <h2>Edit your profile</h2>
+            <button id="cancelEditButton" class="text-button" type="button">Cancel</button>
+          </div>
+          <form id="editProfileForm" class="edit-form">
+            <label>Full name</label><input id="editName" required /><label>College</label
+            ><input id="editCollege" required /><label>Course / Department</label
+            ><input id="editCourse" required /><label>Skills you can teach</label
+            ><input id="editSkills" required /><label>WhatsApp number</label
+            ><input id="editWhatsapp" type="tel" required /><label>New Password (optional)</label>
+            <div class="password-field">
+              <input
+                id="editPassword"
+                type="password"
+                minlength="6"
+                placeholder="Leave blank to keep current password"
+              /><button type="button" class="password-toggle" data-target="editPassword">
+                Show
+              </button>
+            </div>
+            <button class="button" type="submit">Save changes</button>
+          </form>
+          <div class="danger-zone">
+            <h3>Delete account</h3>
+            <p>This permanently deletes your profile and exchange requests.</p>
+            <button id="deleteAccountButton" class="danger-button" type="button">
+              Delete my account
+            </button>
+          </div>
+        </section>
+      </section>
+      <div id="deleteModal" class="confirm-modal" hidden>
+        <div class="confirm-box" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+          <h2 id="deleteTitle">Delete account?</h2>
+          <p>
+            This permanently deletes your profile and exchange requests. Enter your current password
+            to continue.
+          </p>
+          <input id="deletePassword" type="password" placeholder="Current password" />
+          <div class="confirm-actions">
+            <button id="cancelDeleteButton" class="confirm-cancel" type="button">Cancel</button
+            ><button id="confirmDeleteButton" class="confirm-danger" type="button">
+              Delete account
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer"><h3>Campus Skill Exchange</h3></footer>
+    <script src="../JS/dashboard.js"></script>
+    <script src="../JS/navigation.js"></script>
+  </body>
+</html>

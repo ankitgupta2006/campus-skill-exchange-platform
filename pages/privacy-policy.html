@@ -1,41 +1,132 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Privacy Policy - Campus Skill Exchange</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/privacy-policy.css">
-</head>
-<body>
-<header class="header">
-  <a class="logo" href="../index.html"><span class="logo-icon">↔</span><span>Campus Skill<br>Exchange</span></a>
-  <nav>
-    <a href="../index.html">Home</a><a href="skills.html">Find Skills</a><a href="profiles.html">Profiles</a><a href="about.html">About</a><a href="login.html">Login</a><a href="register.html" class="nav-button">Register</a>
-  </nav>
-</header>
-<section class="page-header privacy-banner">
-  <p class="section-label">PRIVACY</p>
-  <h1>Your information,<br>handled responsibly.</h1>
-  <p>This policy explains what Campus Skill Exchange collects, how it is used, and how WhatsApp contact information is protected.</p>
-</section>
-<main class="privacy-container">
-  <p class="privacy-updated"><strong>Last updated:</strong> September 2026</p>
-  <section class="privacy-card"><h2>1. Information We Collect</h2><p>When you create an account, the platform may collect your name, email address, college, course or department, skills you can teach, WhatsApp number, and password.</p></section>
-  <section class="privacy-card"><h2>2. How We Use Information</h2><p>Your information is used to create and display your student profile, help students discover skills, authenticate accounts, manage exchange requests, operate the dashboard, and support communication after an exchange request is accepted.</p></section>
-  <section class="privacy-card highlight"><h2>3. WhatsApp Number Privacy</h2><p>Your WhatsApp number is collected during registration but is not intended to be publicly displayed to every visitor. It remains hidden while an exchange request is pending.</p><p>After an exchange request is accepted, the connected student may receive access to the relevant WhatsApp contact and use the direct WhatsApp link provided by the platform.</p></section>
-  <section class="privacy-card"><h2>4. Authentication and JWT</h2><p>The application uses JSON Web Tokens (JWT) for authentication rather than server-side sessions. Passwords are not stored as plain text; the backend hashes passwords using bcrypt before storing them.</p><p>JWT secrets and other private configuration should be stored in environment variables and must not be committed to source control.</p></section>
-  <section class="privacy-card"><h2>5. MongoDB and Data Storage</h2><p>Account, profile, and exchange-request data are stored using MongoDB through Mongoose. Local development can use MongoDB Community Server. A production deployment should use a secured, access-controlled database service.</p></section>
-  <section class="privacy-card"><h2>6. Data Security</h2><p>The project uses password hashing, JWT authentication, protected API routes, environment variables for secrets, and a Git ignore configuration intended to keep private configuration out of the repository.</p><p>Users should never share their password, JWT token, or private account credentials with others.</p></section>
-  <section class="privacy-card"><h2>7. Third-Party Communication</h2><p>When you use a WhatsApp contact link, communication takes place through WhatsApp. WhatsApp's own privacy practices and terms apply to that communication.</p></section>
-  <section class="privacy-card"><h2>8. User Responsibility</h2><p>Only provide information you are comfortable sharing through the platform. Do not post another person's private information without permission.</p></section>
-  <section class="privacy-card"><h2>9. Data Changes and Deletion</h2><p>Profile information can be updated through the dashboard where supported. The dashboard provides an account deletion control that requires the current password and removes the account and its exchange requests. Data-export controls are not currently provided.</p></section>
-  <section class="privacy-card"><h2>10. Changes to This Policy</h2><p>This Privacy Policy may be updated when the application's features, data practices, or security measures change. The latest version will be published on this page.</p></section>
-</main>
-<footer class="footer">
-  <div><h3>Campus Skill Exchange</h3><p>Learn. Share. Grow together.</p></div>
-  <div class="footer-links"><a href="../index.html">Home</a><a href="skills.html">Skills</a><a href="profiles.html">Profiles</a><a href="about.html">About</a><a href="privacy-policy.html">Privacy Policy</a></div>
-</footer>
-<script src="../JS/navigation.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Privacy Policy - Campus Skill Exchange</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/privacy-policy.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a class="logo" href="../index.html"
+        ><span class="logo-icon">↔</span><span>Campus Skill<br />Exchange</span></a
+      >
+      <nav>
+        <a href="../index.html">Home</a><a href="skills.html">Find Skills</a
+        ><a href="profiles.html">Profiles</a><a href="about.html">About</a
+        ><a href="login.html">Login</a><a href="register.html" class="nav-button">Register</a>
+      </nav>
+    </header>
+    <section class="page-header privacy-banner">
+      <p class="section-label">PRIVACY</p>
+      <h1>Your information,<br />handled responsibly.</h1>
+      <p>
+        This policy explains what Campus Skill Exchange collects, how it is used, and how WhatsApp
+        contact information is protected.
+      </p>
+    </section>
+    <main class="privacy-container">
+      <p class="privacy-updated"><strong>Last updated:</strong> September 2026</p>
+      <section class="privacy-card">
+        <h2>1. Information We Collect</h2>
+        <p>
+          When you create an account, the platform may collect your name, email address, college,
+          course or department, skills you can teach, WhatsApp number, and password.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>2. How We Use Information</h2>
+        <p>
+          Your information is used to create and display your student profile, help students
+          discover skills, authenticate accounts, manage exchange requests, operate the dashboard,
+          and support communication after an exchange request is accepted.
+        </p>
+      </section>
+      <section class="privacy-card highlight">
+        <h2>3. WhatsApp Number Privacy</h2>
+        <p>
+          Your WhatsApp number is collected during registration but is not intended to be publicly
+          displayed to every visitor. It remains hidden while an exchange request is pending.
+        </p>
+        <p>
+          After an exchange request is accepted, the connected student may receive access to the
+          relevant WhatsApp contact and use the direct WhatsApp link provided by the platform.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>4. Authentication and JWT</h2>
+        <p>
+          The application uses JSON Web Tokens (JWT) for authentication rather than server-side
+          sessions. Passwords are not stored as plain text; the backend hashes passwords using
+          bcrypt before storing them.
+        </p>
+        <p>
+          JWT secrets and other private configuration should be stored in environment variables and
+          must not be committed to source control.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>5. MongoDB and Data Storage</h2>
+        <p>
+          Account, profile, and exchange-request data are stored using MongoDB through Mongoose.
+          Local development can use MongoDB Community Server. A production deployment should use a
+          secured, access-controlled database service.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>6. Data Security</h2>
+        <p>
+          The project uses password hashing, JWT authentication, protected API routes, environment
+          variables for secrets, and a Git ignore configuration intended to keep private
+          configuration out of the repository.
+        </p>
+        <p>
+          Users should never share their password, JWT token, or private account credentials with
+          others.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>7. Third-Party Communication</h2>
+        <p>
+          When you use a WhatsApp contact link, communication takes place through WhatsApp.
+          WhatsApp's own privacy practices and terms apply to that communication.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>8. User Responsibility</h2>
+        <p>
+          Only provide information you are comfortable sharing through the platform. Do not post
+          another person's private information without permission.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>9. Data Changes and Deletion</h2>
+        <p>
+          Profile information can be updated through the dashboard where supported. The dashboard
+          provides an account deletion control that requires the current password and removes the
+          account and its exchange requests. Data-export controls are not currently provided.
+        </p>
+      </section>
+      <section class="privacy-card">
+        <h2>10. Changes to This Policy</h2>
+        <p>
+          This Privacy Policy may be updated when the application's features, data practices, or
+          security measures change. The latest version will be published on this page.
+        </p>
+      </section>
+    </main>
+    <footer class="footer">
+      <div>
+        <h3>Campus Skill Exchange</h3>
+        <p>Learn. Share. Grow together.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a><a href="skills.html">Skills</a
+        ><a href="profiles.html">Profiles</a><a href="about.html">About</a
+        ><a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </footer>
+    <script src="../JS/navigation.js"></script>
+  </body>
 </html>

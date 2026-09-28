@@ -19,15 +19,15 @@ function publicRequest(request, currentUserId) {
       id: other._id,
       name: other.name,
       whatsappUnlocked: request.status === "accepted",
-      whatsapp: request.status === "accepted" ? other.whatsapp : null
-    }
+      whatsapp: request.status === "accepted" ? other.whatsapp : null,
+    },
   };
 }
 
 async function listRequests(req, res) {
   try {
     const requests = await ExchangeRequest.find({
-      $or: [{ fromUser: req.userId }, { toUser: req.userId }]
+      $or: [{ fromUser: req.userId }, { toUser: req.userId }],
     })
       .populate("fromUser")
       .populate("toUser")
@@ -49,7 +49,9 @@ async function createRequest(req, res) {
       return res.status(400).json({ message: "You cannot request yourself." });
     }
     if (message.length > 1000) {
-      return res.status(400).json({ message: "The request message must be 1000 characters or fewer." });
+      return res
+        .status(400)
+        .json({ message: "The request message must be 1000 characters or fewer." });
     }
 
     const recipient = await User.findById(toUserId);
@@ -59,22 +61,24 @@ async function createRequest(req, res) {
       status: "pending",
       $or: [
         { fromUser: req.userId, toUser: toUserId },
-        { fromUser: toUserId, toUser: req.userId }
-      ]
+        { fromUser: toUserId, toUser: req.userId },
+      ],
     });
     if (existingPending) {
-      return res.status(409).json({ message: "A pending request already exists between these students." });
+      return res
+        .status(409)
+        .json({ message: "A pending request already exists between these students." });
     }
 
     const request = await ExchangeRequest.create({
       fromUser: req.userId,
       toUser: toUserId,
-      message: message || "Would like to exchange skills with you."
+      message: message || "Would like to exchange skills with you.",
     });
     const populated = await request.populate(["fromUser", "toUser"]);
     res.status(201).json({
       message: "Exchange request sent.",
-      request: publicRequest(populated, req.userId)
+      request: publicRequest(populated, req.userId),
     });
   } catch (error) {
     res.status(500).json({ message: "Could not send the exchange request." });

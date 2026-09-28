@@ -1,1 +1,161 @@
-const TOKEN_KEY="campusSkillExchangeToken";async function api(url,options={}){const h={"Content-Type":"application/json"};const t=localStorage.getItem(TOKEN_KEY);if(t)h.Authorization="Bearer "+t;const r=await fetch("../api"+url,{...options,headers:h});const d=await r.json().catch(()=>({}));if(r.status===401){location.href="login.html";throw new Error("Please log in.");}if(!r.ok)throw new Error(d.message||"Request failed.");return d;}let profiles=[];function render(list){const c=document.getElementById("profileContainer");c.innerHTML="";if(!list.length){c.innerHTML='<div class="no-profile"><h3>No students found</h3><p>Try another search.</p></div>';return;}list.forEach(p=>{const card=document.createElement("div");card.className="profile-card";const skills=String(p.skills).split(",").map(s=>'<span class="skill-tag">'+s.trim()+"</span>").join("");card.innerHTML='<div class="profile-top"><div class="profile-avatar">'+p.name.slice(0,2).toUpperCase()+'</div><div><h3>'+p.name+'</h3><p class="profile-course">'+p.course+'</p></div></div><p><strong>College:</strong> '+p.college+'</p><p><strong>Email:</strong> '+p.email+'</p><div class="profile-skills"><strong>Skills to teach</strong>'+skills+'</div>';const action=document.createElement("div");action.className="profile-action";if(p.whatsappUnlocked&&p.whatsapp){const a=document.createElement("a");a.className="button";a.target="_blank";a.rel="noopener";a.href="https://wa.me/"+p.whatsapp;a.textContent="WhatsApp ↗";action.appendChild(a);}else{const b=document.createElement("button");b.className="request-button";b.textContent="Send exchange request";b.dataset.id=p.id;action.appendChild(b);}card.appendChild(action);c.appendChild(card);});}async function load(){const d=await api("/users/peers");profiles=d.users;render(profiles);const q=new URLSearchParams(location.search).get("search")||new URLSearchParams(location.search).get("skill")||"";if(q){document.getElementById("searchInput").value=q;filter(q);}}function filter(q=document.getElementById("searchInput").value){q=q.toLowerCase();render(profiles.filter(p=>[p.name,p.skills,p.course,p.college].some(x=>String(x).toLowerCase().includes(q))));}document.getElementById("searchInput")?.addEventListener("input",()=>filter());document.getElementById("profileContainer")?.addEventListener("click",async e=>{const b=e.target.closest("button[data-id]");if(!b)return;const msg=prompt("Message for this exchange request:","I would like to exchange skills with you.");if(msg===null)return;try{await api("/requests",{method:"POST",body:JSON.stringify({toUserId:b.dataset.id,message:msg})});b.disabled=true;b.textContent="Request sent";alert("Your exchange request was sent.");}catch(err){alert(err.message);}});if(!localStorage.getItem(TOKEN_KEY))location.href="login.html";else load().catch(e=>alert(e.message));
+const TOKEN_KEY = "campusSkillExchangeToken";
+
+async function api(url, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  if (options.body && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const response = await fetch(`../api${url}`, { ...options, headers });
+  const data = await response.json().catch(() => ({}));
+
+  if (response.status === 401) {
+    localStorage.removeItem(TOKEN_KEY);
+    window.location.href = "login.html";
+    throw new Error("Please log in.");
+  }
+  if (!response.ok) throw new Error(data.message || "Request failed.");
+  return data;
+}
+
+let profiles = [];
+
+function makeText(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.textContent = text;
+  return element;
+}
+
+function render(list) {
+  const container = document.getElementById("profileContainer");
+  if (!container) return;
+  container.replaceChildren();
+
+  if (!list.length) {
+    const empty = document.createElement("div");
+    empty.className = "no-profile";
+    empty.append(
+      makeText("h3", "", "No students found"),
+      makeText("p", "", "Try another search.")
+    );
+    container.appendChild(empty);
+    return;
+  }
+
+  list.forEach((profile) => {
+    const card = document.createElement("div");
+    card.className = "profile-card";
+
+    const top = document.createElement("div");
+    top.className = "profile-top";
+    top.append(
+      makeText("div", "profile-avatar", String(profile.name || "ST").slice(0, 2).toUpperCase())
+    );
+    const identity = document.createElement("div");
+    identity.append(
+      makeText("h3", "", profile.name),
+      makeText("p", "profile-course", profile.course)
+    );
+    top.appendChild(identity);
+
+    const skills = document.createElement("div");
+    skills.className = "profile-skills";
+    skills.appendChild(makeText("strong", "", "Skills to teach"));
+    String(profile.skills || "")
+      .split(",")
+      .map((skill) => skill.trim())
+      .filter(Boolean)
+      .forEach((skill) => skills.appendChild(makeText("span", "skill-tag", skill)));
+
+    card.append(
+      top,
+      makeText("p", "", `College: ${profile.college}`),
+      makeText("p", "", `Email: ${profile.email}`),
+      skills
+    );
+
+    const action = document.createElement("div");
+    action.className = "profile-action";
+    if (profile.whatsappUnlocked && profile.whatsapp) {
+      const link = makeText("a", "button", "WhatsApp ↗");
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.href = `https://wa.me/${encodeURIComponent(profile.whatsapp)}`;
+      action.appendChild(link);
+    } else {
+      const button = makeText("button", "request-button", "Send exchange request");
+      button.type = "button";
+      button.dataset.id = profile.id;
+      action.appendChild(button);
+    }
+    card.appendChild(action);
+    container.appendChild(card);
+  });
+}
+
+async function load() {
+  const data = await api("/users/peers");
+  profiles = data.users || [];
+  render(profiles);
+
+  const query = new URLSearchParams(window.location.search).get("search") ||
+    new URLSearchParams(window.location.search).get("skill") || "";
+  if (query) {
+    const input = document.getElementById("searchInput");
+    if (input) input.value = query;
+    filter(query);
+  }
+}
+
+function filter(query = document.getElementById("searchInput")?.value || "") {
+  const value = query.trim().toLowerCase();
+  render(
+    profiles.filter((profile) =>
+      [profile.name, profile.skills, profile.course, profile.college].some((field) =>
+        String(field || "").toLowerCase().includes(value)
+      )
+    )
+  );
+}
+
+function searchProfiles() {
+  filter();
+}
+
+window.searchProfiles = searchProfiles;
+document.getElementById("searchInput")?.addEventListener("input", () => filter());
+document.getElementById("profileContainer")?.addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-id]");
+  if (!button || button.disabled) return;
+
+  const message = window.prompt(
+    "Message for this exchange request:",
+    "I would like to exchange skills with you."
+  );
+  if (message === null) return;
+
+  button.disabled = true;
+  try {
+    await api("/requests", {
+      method: "POST",
+      body: JSON.stringify({
+        toUserId: button.dataset.id,
+        message: message.trim()
+      })
+    });
+    button.textContent = "Request sent";
+  } catch (error) {
+    button.disabled = false;
+    window.alert(error.message);
+  }
+});
+
+if (!localStorage.getItem(TOKEN_KEY)) {
+  window.location.href = "login.html";
+} else {
+  load().catch((error) => window.alert(error.message));
+}
